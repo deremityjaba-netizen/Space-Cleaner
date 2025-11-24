@@ -66,6 +66,6 @@ public class GameObject {
 
     }
     public void dispose(){
-
+        texture.dispose();
     }
 }
