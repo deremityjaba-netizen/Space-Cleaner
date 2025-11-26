@@ -1,5 +1,7 @@
 package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
 
+import com.badlogic.gdx.utils.TimeUtils;
+
 public class GameSettings {
     public static final int SCREEN_WIDTH = 720;
     public static final int SCREEN_HEIGHT = 1280;
@@ -10,4 +12,10 @@ public class GameSettings {
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
     public static final int SHIP_FORCE_RATIO = 10;
+    public static final float TRASH_VELOSITY = 10;
+    public static final long STARTING_TRASH_APPEARANCE_COOL_DOWN = 2000;
+    public static final int TRASH_WIDTH = 140;
+    public static final int TRASH_HEIGHT = 100;
+
+
 }
