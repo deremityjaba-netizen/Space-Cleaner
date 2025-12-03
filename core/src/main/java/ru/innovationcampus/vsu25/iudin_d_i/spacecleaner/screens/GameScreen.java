@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ContactManager;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MovingBackgroundView;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSession;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
@@ -24,12 +25,15 @@ public class GameScreen extends ScreenAdapter {
     ArrayList<TrashObject> trashArray;
     ArrayList<BulletObject> bulletArray;
     ContactManager contactManager;
+    MovingBackgroundView backgroundView;
     public GameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
 
         gameSession = new GameSession();
 
         contactManager = new ContactManager(myGdxGame.world);
+
+        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
 
         trashArray = new ArrayList<>();
 
@@ -68,6 +72,8 @@ public class GameScreen extends ScreenAdapter {
             System.out.println("Game over!");
         }
 
+        backgroundView.move();
+
         updateBullets();
         updateTrash();
         myGdxGame.stepWorld();
@@ -87,6 +93,7 @@ public class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(Color.CLEAR);
 
         myGdxGame.batch.begin();
+        backgroundView.draw(myGdxGame.batch);
         for(TrashObject trash : trashArray) trash.draw(myGdxGame.batch);
         for(BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         shipObject.draw(myGdxGame.batch);
