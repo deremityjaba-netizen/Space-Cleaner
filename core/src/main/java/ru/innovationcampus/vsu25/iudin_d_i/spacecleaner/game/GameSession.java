@@ -1,4 +1,4 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game;
 
 import com.badlogic.gdx.utils.TimeUtils;
 

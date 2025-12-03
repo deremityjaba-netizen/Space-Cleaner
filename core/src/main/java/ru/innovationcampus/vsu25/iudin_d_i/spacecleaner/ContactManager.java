@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects.GameObject;
+
 public class ContactManager {
     World world;
 
@@ -26,6 +29,8 @@ public class ContactManager {
                     || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.BULLET_BIT
                     || cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.SHIP_BIT
                     || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.SHIP_BIT){
+                    ((GameObject) fixA.getUserData()).hit();
+                    ((GameObject) fixB.getUserData()).hit();
 
                 }
 

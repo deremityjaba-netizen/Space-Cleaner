@@ -1,22 +1,19 @@
 package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
 
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.POSITION_ITERATIONS;
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.SCREEN_HEIGHT;
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.SCREEN_WIDTH;
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.STEP_TIME;
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.VELOCITY_ITERATIONS;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.POSITION_ITERATIONS;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.SCREEN_HEIGHT;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.SCREEN_WIDTH;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.STEP_TIME;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.VELOCITY_ITERATIONS;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.screens.GameScreen;
 

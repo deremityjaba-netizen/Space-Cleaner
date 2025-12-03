@@ -1,6 +1,4 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
-
-import com.badlogic.gdx.utils.TimeUtils;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game;
 
 public class GameSettings {
     public static final int SCREEN_WIDTH = 720;

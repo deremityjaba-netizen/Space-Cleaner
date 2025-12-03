@@ -1,13 +1,13 @@
 package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects;
 
-import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings.SCALE;
+import static ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -17,6 +17,7 @@ public class GameObject {
     public int height;
     protected Texture texture;
     public Body body;
+
 
     public int getX() {
         return (int) (body.getPosition().x / SCALE);
@@ -45,8 +46,13 @@ public class GameObject {
 
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
+
+    }
+    public void hit(){
+
     }
     private Body createBody(float x, float y, World world){
+
         BodyDef def = new BodyDef();
 
         def.type = BodyDef.BodyType.DynamicBody;
@@ -62,7 +68,8 @@ public class GameObject {
         fixtureDef.density = 0.1f;
         fixtureDef.friction = 1f;
 
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
         circleShape.dispose();
 
         body.setTransform(x * SCALE, y * SCALE, 0);

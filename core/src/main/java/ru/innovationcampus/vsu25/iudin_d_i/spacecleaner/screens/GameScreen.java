@@ -1,10 +1,6 @@
 package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.screens;
 
-import static com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable.draw;
-
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
@@ -12,9 +8,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameResources;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSession;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ContactManager;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSession;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MyGdxGame;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects.BulletObject;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects.ShipObject;
@@ -26,10 +23,13 @@ public class GameScreen extends ScreenAdapter {
     ShipObject shipObject;
     ArrayList<TrashObject> trashArray;
     ArrayList<BulletObject> bulletArray;
+    ContactManager contactManager;
     public GameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
 
         gameSession = new GameSession();
+
+        contactManager = new ContactManager(myGdxGame.world);
 
         trashArray = new ArrayList<>();
 
@@ -47,6 +47,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public  void  render(float delta){
+
         if(gameSession.shouldSpawnTrash()){
             TrashObject trashObject = new TrashObject(
                 GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT,
@@ -62,6 +63,9 @@ public class GameScreen extends ScreenAdapter {
                 GameResources.BULLET_IMG_PATH,
                 myGdxGame.world);
             bulletArray.add(laserBullet);
+        }
+        if(!shipObject.isAlive()){
+            System.out.println("Game over!");
         }
 
         updateBullets();
@@ -90,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
     }
     private void updateTrash() {
         for (int i = 0; i < trashArray.size(); i++){
-            if(!trashArray.get(i).isInFrame()){
+            if(!trashArray.get(i).isInFrame() || !trashArray.get(i).isAlive()){
                 myGdxGame.world.destroyBody(trashArray.get(i).body);
                 trashArray.remove(i--);
             }

@@ -3,7 +3,7 @@ package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.lwjgl3;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameSettings;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MyGdxGame;
 
 /** Launches the desktop (LWJGL3) application. */
