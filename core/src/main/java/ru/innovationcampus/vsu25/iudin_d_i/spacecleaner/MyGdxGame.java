@@ -19,10 +19,12 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.screens.GameScreen;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.screens.MenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class MyGdxGame extends Game {
     public SpriteBatch batch;
+    public MenuScreen menuScreen;
     public OrthographicCamera camera;
     public GameScreen gameScreen;
     public World world;
@@ -45,7 +47,8 @@ public class MyGdxGame extends Game {
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         gameScreen = new GameScreen(this);
-        setScreen(gameScreen);
+        menuScreen = new MenuScreen(this);
+        setScreen(menuScreen);
     }
 
     public  void stepWorld(){

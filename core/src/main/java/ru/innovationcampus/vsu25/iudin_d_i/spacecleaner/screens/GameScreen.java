@@ -76,11 +76,13 @@ public class GameScreen extends ScreenAdapter {
         );
     }
     public void show(){
-      gameSession.startGame();
+      restartGame();
     }
 
     public  void  render(float delta){
-        if(gameSession.state == GameState.PLAYING) {
+        handleInput();
+
+        if(GameSession.state == GameState.PLAYING) {
 
             if (gameSession.shouldSpawnTrash()) {
                 TrashObject trashObject = new TrashObject(
@@ -99,7 +101,7 @@ public class GameScreen extends ScreenAdapter {
                 bulletArray.add(laserBullet);
             }
             if (!shipObject.isAlive()) {
-                System.out.println("Game over!");
+                Gdx.app.exit();
             }
             liveView.setLeftLives(shipObject.getLivesLeft());
             scoreTextView.setText("Score : " + 100);
@@ -111,14 +113,15 @@ public class GameScreen extends ScreenAdapter {
             updateTrash();
             myGdxGame.stepWorld();
             handleInput();
-            draw();
+
         }
+        draw();
     }
 
     private void handleInput() {
         if (Gdx.input.isTouched()) {
             myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-            switch (gameSession.state) {
+            switch (GameSession.state) {
                 case PLAYING:
                     if (pauseButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                         gameSession.pauseGame();
@@ -127,9 +130,13 @@ public class GameScreen extends ScreenAdapter {
                     break;
 
                 case PAUSED:
-                    //if(continueButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)){
-                    //    gameSession.resumeGame();
-                    //}
+                    if (continueButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
+                        gameSession.resumeGame();
+                    }
+                    if (homeButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
+                        myGdxGame.setScreen(myGdxGame.menuScreen);
+                    }
+
                     break;
             }
 
@@ -178,5 +185,24 @@ public class GameScreen extends ScreenAdapter {
                 bulletArray.remove(i--);
             }
         }
+    }
+    private void  restartGame(){
+        for(int i = 0; i < trashArray.size(); i++){
+            myGdxGame.world.destroyBody(trashArray.get(i).body);
+            trashArray.remove(i--);
+
+        }
+        if(shipObject != null){
+            myGdxGame.world.destroyBody(shipObject.body);
+        }
+        shipObject = new ShipObject(
+            GameSettings.SCREEN_WIDTH / 2, 150,
+            GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
+            GameResources.SHIP_IMG_PATH,
+            myGdxGame.world
+        );
+
+        bulletArray.clear();
+        gameSession.startGame();
     }
 }
