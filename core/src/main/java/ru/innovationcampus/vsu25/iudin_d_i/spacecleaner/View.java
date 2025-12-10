@@ -22,11 +22,12 @@ public class View implements Disposable {
     }
 
     public boolean isHit(float tx, float ty){
-        return false;
+        return tx >= x && tx <= x + width && ty >= y && ty <= y + height;
     }
     public void draw(SpriteBatch batch){
 
     }
+
 
     @Override
     public void dispose() {

@@ -27,12 +27,16 @@ public class MyGdxGame extends Game {
     public GameScreen gameScreen;
     public World world;
     public BitmapFont commonWhileFont;
+    public BitmapFont commonBlackFont;
+    public BitmapFont largeWhiteFont;
     float accumulator = 0;
     public Vector3 touch ;
 
 
     @Override
     public void create() {
+        largeWhiteFont = FontBuilder.generate(48, Color.WHITE, GameResources.FONT_PATH);
+        commonBlackFont = FontBuilder.generate(30, Color.BLACK, GameResources.FONT_PATH);
         commonWhileFont = FontBuilder.generate(24, Color.WHITE, GameResources.FONT_PATH);
         Box2D.init();
         world = new World(new Vector2(0,0), true);
