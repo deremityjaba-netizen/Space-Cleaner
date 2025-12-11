@@ -1,12 +1,10 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TextView extends  View{
+public class TextView extends View {
     private BitmapFont font;
     private String text;
 

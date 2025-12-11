@@ -1,4 +1,4 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;

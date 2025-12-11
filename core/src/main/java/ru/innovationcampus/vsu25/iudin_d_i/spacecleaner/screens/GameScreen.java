@@ -8,13 +8,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ButtonView;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ContactManager;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.managers.AudioManager;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.ButtonView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.managers.ContactManager;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameState;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ImageView;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.LiveView;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MovingBackgroundView;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.TextView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.ImageView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.LiveView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.MovingBackgroundView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.TextView;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSession;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
@@ -38,9 +39,12 @@ public class GameScreen extends ScreenAdapter {
     MovingBackgroundView backgroundView;
     ImageView topBlackoutView;
     ImageView fullBlackoutView;
+    AudioManager audioManager;
     LiveView liveView;
     public GameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
+
+        audioManager = new AudioManager();
 
         scoreTextView = new TextView(myGdxGame.commonWhileFont, 50, 1215);
 
@@ -82,7 +86,11 @@ public class GameScreen extends ScreenAdapter {
     public  void  render(float delta){
         handleInput();
 
+
+
         if(GameSession.state == GameState.PLAYING) {
+
+            if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.shootSound.play();
 
             if (gameSession.shouldSpawnTrash()) {
                 TrashObject trashObject = new TrashObject(
@@ -99,6 +107,7 @@ public class GameScreen extends ScreenAdapter {
                     GameResources.BULLET_IMG_PATH,
                     myGdxGame.world);
                 bulletArray.add(laserBullet);
+                myGdxGame.audioManager.shootSound.play(0.05f);
             }
             if (!shipObject.isAlive()) {
                 Gdx.app.exit();
@@ -172,10 +181,18 @@ public class GameScreen extends ScreenAdapter {
     }
     private void updateTrash() {
         for (int i = 0; i < trashArray.size(); i++){
-            if(!trashArray.get(i).isInFrame() || !trashArray.get(i).isAlive()){
+
+            boolean hasToBeDestroyed = !trashArray.get(i).isAlive() || !trashArray.get(i).isInFrame();
+
+            if(!trashArray.get(i).isAlive()){
+                myGdxGame.audioManager.explosionSound.play(0.4f);
+            }
+
+            if(hasToBeDestroyed){
                 myGdxGame.world.destroyBody(trashArray.get(i).body);
                 trashArray.remove(i--);
             }
+            if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.explosionSound.play(0.4f);
         }
     }
     private void updateBullets(){

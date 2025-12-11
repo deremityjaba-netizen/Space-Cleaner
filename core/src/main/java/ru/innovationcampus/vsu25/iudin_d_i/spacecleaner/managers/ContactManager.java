@@ -1,4 +1,4 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.managers;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

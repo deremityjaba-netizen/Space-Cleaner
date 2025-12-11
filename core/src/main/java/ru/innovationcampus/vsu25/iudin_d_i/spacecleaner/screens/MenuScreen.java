@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.ButtonView;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MovingBackgroundView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.ButtonView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.MovingBackgroundView;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.MyGdxGame;
-import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.TextView;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view.TextView;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 
 public class MenuScreen extends ScreenAdapter {
@@ -62,7 +62,7 @@ public class MenuScreen extends ScreenAdapter {
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {Gdx.app.exit();
             }
             if (settingsButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                System.out.println("Go to settings Screen");
+                myGdxGame.setScreen(myGdxGame.settingsScreen);
             }
         }
     }

@@ -1,11 +1,11 @@
-package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner;
+package ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.view;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 
-public class LiveView extends View{
+public class LiveView extends View {
     Texture texture;
     public static int livePadding = 6;
     public String text;
