@@ -88,9 +88,10 @@ public class GameScreen extends ScreenAdapter {
 
 
 
+
         if(GameSession.state == GameState.PLAYING) {
 
-            if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.shootSound.play();
+
 
             if (gameSession.shouldSpawnTrash()) {
                 TrashObject trashObject = new TrashObject(
@@ -107,7 +108,8 @@ public class GameScreen extends ScreenAdapter {
                     GameResources.BULLET_IMG_PATH,
                     myGdxGame.world);
                 bulletArray.add(laserBullet);
-                myGdxGame.audioManager.shootSound.play(0.05f);
+                if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.shootSound.play(0.1f);
+
             }
             if (!shipObject.isAlive()) {
                 Gdx.app.exit();
@@ -124,6 +126,7 @@ public class GameScreen extends ScreenAdapter {
             handleInput();
 
         }
+
         draw();
     }
 
@@ -159,7 +162,22 @@ public class GameScreen extends ScreenAdapter {
         myGdxGame.batch.begin();
 
         backgroundView.draw(myGdxGame.batch);
+
+        for(TrashObject trash : trashArray) trash.draw(myGdxGame.batch);
+        for(BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
+        shipObject.draw(myGdxGame.batch);
+
         topBlackoutView.draw(myGdxGame.batch);
+
+
+
+        liveView.draw(myGdxGame.batch);
+        scoreTextView.draw(myGdxGame.batch);
+        pauseButton.draw(myGdxGame.batch);
+
+
+
+
 
         if(GameSession.state == GameState.PAUSED){
             fullBlackoutView.draw(myGdxGame.batch);
@@ -168,12 +186,8 @@ public class GameScreen extends ScreenAdapter {
             continueButton.draw(myGdxGame.batch);
         }
 
-        liveView.draw(myGdxGame.batch);
-        scoreTextView.draw(myGdxGame.batch);
-        pauseButton.draw(myGdxGame.batch);
-        for(TrashObject trash : trashArray) trash.draw(myGdxGame.batch);
-        for(BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
-        shipObject.draw(myGdxGame.batch);
+
+
 
 
 
@@ -182,17 +196,18 @@ public class GameScreen extends ScreenAdapter {
     private void updateTrash() {
         for (int i = 0; i < trashArray.size(); i++){
 
+
             boolean hasToBeDestroyed = !trashArray.get(i).isAlive() || !trashArray.get(i).isInFrame();
 
             if(!trashArray.get(i).isAlive()){
-                myGdxGame.audioManager.explosionSound.play(0.4f);
+                if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.explosionSound.play(0.3f);
             }
 
             if(hasToBeDestroyed){
                 myGdxGame.world.destroyBody(trashArray.get(i).body);
                 trashArray.remove(i--);
             }
-            if(myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.explosionSound.play(0.4f);
+
         }
     }
     private void updateBullets(){
