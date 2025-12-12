@@ -32,7 +32,7 @@ public class MyGdxGame extends Game {
     public OrthographicCamera camera;
     public GameScreen gameScreen;
     public World world;
-    public BitmapFont commonWhileFont;
+    public BitmapFont commonWhiteFont;
     public BitmapFont commonBlackFont;
     public BitmapFont largeWhiteFont;
     float accumulator = 0;
@@ -44,7 +44,7 @@ public class MyGdxGame extends Game {
 
         largeWhiteFont = FontBuilder.generate(48, Color.WHITE, GameResources.FONT_PATH);
         commonBlackFont = FontBuilder.generate(30, Color.BLACK, GameResources.FONT_PATH);
-        commonWhileFont = FontBuilder.generate(24, Color.WHITE, GameResources.FONT_PATH);
+        commonWhiteFont = FontBuilder.generate(24, Color.WHITE, GameResources.FONT_PATH);
         Box2D.init();
         world = new World(new Vector2(0,0), true);
         batch = new SpriteBatch();
