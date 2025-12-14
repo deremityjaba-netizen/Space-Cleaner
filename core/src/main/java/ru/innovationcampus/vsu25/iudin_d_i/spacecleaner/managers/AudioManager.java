@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameResources;
 
+
 public class AudioManager {
 
     public boolean isSoundOn;
@@ -37,6 +38,5 @@ public class AudioManager {
         if (isMusicOn) backgroundMusic.play();
         else backgroundMusic.stop();
     }
-
 
 }
