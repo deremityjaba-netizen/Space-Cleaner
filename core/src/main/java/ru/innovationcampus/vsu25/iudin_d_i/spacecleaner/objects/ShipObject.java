@@ -16,7 +16,14 @@ public class ShipObject extends  GameObject{
         body.setLinearDamping(10);
         livesLeft = 3;
     }
-    public boolean needToShot(){
+    /*public boolean needToShot(){
+        if(TimeUtils.millis() - lastShotTime >= GameSettings.SHOOTING_COOL_DOWN){
+            lastShotTime = TimeUtils.millis();
+            return true;
+        }
+        return false;
+    }*/
+    public boolean canShoot(){
         if(TimeUtils.millis() - lastShotTime >= GameSettings.SHOOTING_COOL_DOWN){
             lastShotTime = TimeUtils.millis();
             return true;
@@ -24,10 +31,10 @@ public class ShipObject extends  GameObject{
         return false;
     }
 
-    private void putInFrame(){
+    public void putInFrame(){
 
-        if(getY() > (GameSettings.SCREEN_HEIGHT / 2f - height / 2f)){
-            setY(GameSettings.SCREEN_HEIGHT / 2 - height / 2);
+        if(getY() > (height - height / 2f)){
+            setY(height - height / 2);
         }
         if(getY() <= (height / 2f)) {
             setY(height / 2);
@@ -38,6 +45,7 @@ public class ShipObject extends  GameObject{
         if(getX() > (GameSettings.SCREEN_WIDTH + width / 2f)){
             setX(0);
         }
+
     }
     @Override
     public  void draw(SpriteBatch batch){
@@ -55,6 +63,7 @@ public class ShipObject extends  GameObject{
             ),
             true
             );
+
     }
     @Override
     public void hit(){

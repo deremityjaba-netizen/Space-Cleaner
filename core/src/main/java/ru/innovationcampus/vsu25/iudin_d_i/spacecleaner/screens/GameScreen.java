@@ -42,8 +42,10 @@ public class GameScreen extends ScreenAdapter {
     // PLAY state UI
     MovingBackgroundView backgroundView;
     ImageView topBlackoutView;
+    ImageView downBlackoutView;
     LiveView liveView;
     TextView scoreTextView;
+    TextView tapTextView;
     ButtonView pauseButton;
 
     // PAUSED state UI
@@ -76,8 +78,12 @@ public class GameScreen extends ScreenAdapter {
 
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
         topBlackoutView = new ImageView(0, 1180, GameResources.BLACKOUT_TOP_IMG_PATH);
+        downBlackoutView = new ImageView(0, 150, GameResources.BLACKOUT_TOP_IMG_PATH);
         liveView = new LiveView(305, 1215);
         scoreTextView = new TextView(myGdxGame.commonWhiteFont, 50, 1215);
+        tapTextView = new TextView(myGdxGame.commonWhiteFont, 0, 170);
+
+
         pauseButton = new ButtonView(
             605, 1200,
             46, 54,
@@ -141,7 +147,7 @@ public class GameScreen extends ScreenAdapter {
                 aidArray.add(aidObject);
             }
 
-            if (shipObject.needToShot()) {
+            /*if (shipObject.needToShot()) {
                 BulletObject laserBullet = new BulletObject(
                     shipObject.getX(), shipObject.getY() + shipObject.height / 2,
                     GameSettings.BULLET_WIDTH, GameSettings.BULLET_HEIGHT,
@@ -150,7 +156,7 @@ public class GameScreen extends ScreenAdapter {
                 );
                 bulletArray.add(laserBullet);
                 if (myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.shootSound.play(0.2f);
-            }
+            }*/
 
             if (!shipObject.isAlive()) {
                 gameSession.endGame();
@@ -163,6 +169,7 @@ public class GameScreen extends ScreenAdapter {
             backgroundView.move();
             gameSession.updateScore();
             scoreTextView.setText("Score: " + gameSession.getScore());
+            tapTextView.setText("tap here!");
             liveView.setLeftLives(shipObject.getLivesLeft());
 
             myGdxGame.stepWorld();
@@ -180,7 +187,24 @@ public class GameScreen extends ScreenAdapter {
                     if (pauseButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                         gameSession.pauseGame();
                     }
+                    if(downBlackoutView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
+                        if (shipObject.canShoot()) {
+                            BulletObject laserBullet = new BulletObject(
+                                shipObject.getX(), shipObject.getY() + shipObject.height / 2,
+                                GameSettings.BULLET_WIDTH, GameSettings.BULLET_HEIGHT,
+                                GameResources.BULLET_IMG_PATH,
+                                myGdxGame.world
+                            );
+                            bulletArray.add(laserBullet);
+                            if (myGdxGame.audioManager.isSoundOn) {
+                                myGdxGame.audioManager.shootSound.play(0.2f);
+                            }
+                        }
+                    }
                     shipObject.move(myGdxGame.touch);
+
+
+
                     break;
 
                 case PAUSED:
@@ -210,15 +234,19 @@ public class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(Color.CLEAR);
 
         myGdxGame.batch.begin();
+
         backgroundView.draw(myGdxGame.batch);
         for (TrashObject trash : trashArray) trash.draw(myGdxGame.batch);
         for (AidObject aid : aidArray) aid.draw(myGdxGame.batch);
         shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         topBlackoutView.draw(myGdxGame.batch);
+        downBlackoutView.draw(myGdxGame.batch);
         scoreTextView.draw(myGdxGame.batch);
+        tapTextView.draw(myGdxGame.batch);
         liveView.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
+
 
         if (gameSession.state == GameState.PAUSED) {
             fullBlackoutView.draw(myGdxGame.batch);
@@ -293,7 +321,7 @@ public class GameScreen extends ScreenAdapter {
             myGdxGame.world
         );
 
-        bulletArray.clear();
+        //bulletArray.clear();
         gameSession.startGame();
     }
 }
