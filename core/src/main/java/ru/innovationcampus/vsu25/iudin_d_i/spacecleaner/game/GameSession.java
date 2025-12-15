@@ -8,20 +8,24 @@ import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.GameState;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.managers.MemoryManager;
 
 public class GameSession {
-    public static GameState state;
+    public GameState state;
     long nextTrashSpawnTime;
-    static long sessionStartTime;
+    long nextAidSpawnTime;
+     long sessionStartTime;
     long pauseStartTime;
-    private static int score;
-    static int destructedTrashNumber;
+    private  int score;
+     int destructedTrashNumber;
 
     public void startGame() {
         state = GameState.PLAYING;
         sessionStartTime = TimeUtils.millis();
         nextTrashSpawnTime = sessionStartTime + (long) (GameSettings.STARTING_TRASH_APPEARANCE_COOL_DOWN
             * getTrashPeriodCoolDown());
+        nextAidSpawnTime = sessionStartTime + (long) (GameSettings.STARTING_AID_APPEARANCE_COOL_DOWN
+            * getAidPeriodCoolDown());
+        destructedTrashNumber = 0;
     }
-    public static int getScore(){
+    public  int getScore(){
         return  score;
     }
     public void pauseGame(){
@@ -40,18 +44,30 @@ public class GameSession {
         }
         return false;
     }
+    public boolean shouldSpawnAid(){
+        if(nextAidSpawnTime <= TimeUtils.millis()){
+            nextAidSpawnTime = TimeUtils.millis() + (long) (GameSettings.STARTING_AID_APPEARANCE_COOL_DOWN
+                * getAidPeriodCoolDown());
+            return true;
+        }
+        return false;
+    }
 
     public void  destructionRegistration(){
         destructedTrashNumber += 1;
     }
-    public static void updateScore(){
+    public  void updateScore(){
         score = (int) (TimeUtils.millis() - sessionStartTime) / 100 + destructedTrashNumber * 100;
     }
 
     private float getTrashPeriodCoolDown() {
-        return (float) Math.exp(-0.001 * (TimeUtils.millis() - sessionStartTime) / 500);
+        return (float) Math.exp(-0.001 * (TimeUtils.millis() - sessionStartTime) / 100);
     }
-    public static void endGame(){
+    private float getAidPeriodCoolDown() {
+        return (float) Math.exp(-0.001 * (TimeUtils.millis() - sessionStartTime) / 10000);
+    }
+
+    public  void endGame(){
         updateScore();
         state = GameState.ENDED;
         ArrayList<Integer> recordsTable = MemoryManager.loadRecordsTable();

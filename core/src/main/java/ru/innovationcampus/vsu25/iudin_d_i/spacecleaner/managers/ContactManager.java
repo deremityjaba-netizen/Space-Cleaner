@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.game.GameSettings;
 import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects.GameObject;
+import ru.innovationcampus.vsu25.iudin_d_i.spacecleaner.objects.ShipObject;
 
 public class ContactManager {
     World world;
@@ -28,10 +29,17 @@ public class ContactManager {
                 if(cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.BULLET_BIT
                     || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.BULLET_BIT
                     || cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.SHIP_BIT
-                    || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.SHIP_BIT){
+                    || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.SHIP_BIT
+                    || cDef == GameSettings.AID_BIT && cDef2 == GameSettings.BULLET_BIT
+                    || cDef2 == GameSettings.AID_BIT && cDef == GameSettings.BULLET_BIT){
                     ((GameObject) fixA.getUserData()).hit();
                     ((GameObject) fixB.getUserData()).hit();
-
+                } else if (cDef == GameSettings.AID_BIT && cDef2 == GameSettings.SHIP_BIT) {
+                    ((GameObject) fixA.getUserData()).hit();
+                    ((ShipObject) fixB.getUserData()).heal();
+                } else if(cDef == GameSettings.SHIP_BIT && cDef2 == GameSettings.AID_BIT){
+                    ((GameObject) fixB.getUserData()).hit();
+                    ((ShipObject) fixA.getUserData()).heal();
                 }
 
             }

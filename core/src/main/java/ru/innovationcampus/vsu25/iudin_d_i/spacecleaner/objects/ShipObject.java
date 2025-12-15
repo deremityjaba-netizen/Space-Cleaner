@@ -60,6 +60,7 @@ public class ShipObject extends  GameObject{
     public void hit(){
         livesLeft -= 1;
     }
+    public void heal(){livesLeft += 1;}
     public boolean isAlive(){
         return livesLeft > 0;
     }
