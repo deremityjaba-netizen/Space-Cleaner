@@ -30,8 +30,7 @@ public class ContactManager {
                     || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.BULLET_BIT
                     || cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.SHIP_BIT
                     || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.SHIP_BIT
-                    || cDef == GameSettings.AID_BIT && cDef2 == GameSettings.BULLET_BIT
-                    || cDef2 == GameSettings.AID_BIT && cDef == GameSettings.BULLET_BIT){
+                    ){
                     ((GameObject) fixA.getUserData()).hit();
                     ((GameObject) fixB.getUserData()).hit();
                 } else if (cDef == GameSettings.AID_BIT && cDef2 == GameSettings.SHIP_BIT) {
