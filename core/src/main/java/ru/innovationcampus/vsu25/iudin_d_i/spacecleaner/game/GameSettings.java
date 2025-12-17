@@ -18,7 +18,7 @@ public class GameSettings {
     public static final int AID_WIDTH = 100;
     public static final int AID_HEIGHT = 80;
     public static final int BULLET_VELOCITY = 200;
-    public static final int SHOOTING_COOL_DOWN = 400;
+    public static final int SHOOTING_COOL_DOWN = 600;
     public static final int BULLET_WIDTH = 15;
     public static final int BULLET_HEIGHT = 45;
     public static final short TRASH_BIT = 1;
